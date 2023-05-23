@@ -1,38 +1,36 @@
-from collections import namedtuple
-import altair as alt
-import math
-import pandas as pd
 import streamlit as st
+import pandas as pd
+import networkx as nx
+from pyvis.network import Network
 
-"""
-# Welcome to Streamlit!
+# Load data
+@st.cache
+def load_data():
+    data = pd.read_csv('your_data.csv')
+    return data
 
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:
+df = load_data()
 
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
+# Initialize the network
+net = Network(height="750px", width="100%", bgcolor="#222222", font_color="white")
 
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
+# add nodes for 'person'
+persons = df['RecordID'].unique()
+for person in persons:
+    net.add_node(person, label=person, color='green')
 
+# add nodes for other categories and connect them with 'person'
+categories = df.columns.to_list()
+categories.remove('RecordID')
 
-with st.echo(code_location='below'):
-    total_points = st.slider("Number of points in spiral", 1, 5000, 2000)
-    num_turns = st.slider("Number of turns in spiral", 1, 100, 9)
-
-    Point = namedtuple('Point', 'x y')
-    data = []
-
-    points_per_turn = total_points / num_turns
-
-    for curr_point_num in range(total_points):
-        curr_turn, i = divmod(curr_point_num, points_per_turn)
-        angle = (curr_turn + 1) * 2 * math.pi * i / points_per_turn
-        radius = curr_point_num / total_points
-        x = radius * math.cos(angle)
-        y = radius * math.sin(angle)
-        data.append(Point(x, y))
-
-    st.altair_chart(alt.Chart(pd.DataFrame(data), height=500, width=500)
-        .mark_circle(color='#0068c9', opacity=0.5)
-        .encode(x='x:Q', y='y:Q'))
+for category in categories:
+    unique_values = df[category].unique()
+    for value in unique_values:
+        net.add_node(f'{category}_{value}', label=value, color='red')
+        subset = df[df[category] == value]
+        for i in subset['RecordID']:
+            net.add_edge(i, f'{category}_{value}')
+            
+# display the graph
+net.show('example.html')
+st.components.v1.html(net.HTML, height=600)
