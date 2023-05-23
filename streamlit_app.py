@@ -40,15 +40,19 @@ def draw_network_graph(G, root_values):
 st.header('Women on Remand')
 G1, root_values1 = create_network_graph(df1)
 draw_network_graph(G1, root_values1)
+st.dataframe(df1.drop(columns=root_values1).apply(pd.Series.value_counts))
 
 st.header('Women Received into Prison')
 G2, root_values2 = create_network_graph(df2)
 draw_network_graph(G2, root_values2)
+st.dataframe(df2.drop(columns=root_values2).apply(pd.Series.value_counts))
 
 st.header('Women on Supervised Orders (Current)')
 G3, root_values3 = create_network_graph(df3)
 draw_network_graph(G3, root_values3)
+st.dataframe(df3.drop(columns=root_values3).apply(pd.Series.value_counts))
 
 st.header('Women on Supervised Orders (Starting)')
 G4, root_values4 = create_network_graph(df4)
 draw_network_graph(G4, root_values4)
+st.dataframe(df4.drop(columns=root_values4).apply(pd.Series.value_counts))
