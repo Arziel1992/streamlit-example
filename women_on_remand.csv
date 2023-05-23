@@ -1,0 +1,5 @@
+ID,StartDate,EndDate,MostSeriousCharge,TimeInCustody(Days),DischargeCircumstances,ATSI,Nationality
+1,2018-10-01,2018-11-01,Theft,31,Bail,No,Australian
+2,2018-10-02,2018-11-17,Assault,46,Time Served,Yes,Australian
+3,2018-10-03,2018-12-03,Drug Possession,61,Bail,No,Non-Australian
+1500,2020-02-28,2020-05-28,Fraud,90,Time Served,No,Australian
