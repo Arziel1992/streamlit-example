@@ -28,11 +28,21 @@ def create_network_graph(df):
     return G, root
 
 # Draw network graph
+#def draw_network_graph(G, root_values):
+#    fig, ax = plt.subplots(figsize=(8,6))
+#    node_colors = ["green" if str(node) in map(str, root_values) else "red" for node in G.nodes()]
+#    nx.draw(G, with_labels=True, node_color=node_colors, ax=ax)
+#    st.pyplot(fig)
+    
 def draw_network_graph(G, root_values):
-    fig, ax = plt.subplots(figsize=(8,6))
-    node_colors = ["green" if str(node) in map(str, root_values) else "red" for node in G.nodes()]
-    nx.draw(G, with_labels=True, node_color=node_colors, ax=ax)
-    st.pyplot(fig)
+    color_map = []
+    for node in G:
+        if node in root_values:
+            color_map.append('green')
+        else: 
+            color_map.append('red')  
+    nx.draw(G, with_labels=True, node_color=color_map)
+    st.pyplot()
 
 # Display statistics
 def display_statistics(df, root_values):
