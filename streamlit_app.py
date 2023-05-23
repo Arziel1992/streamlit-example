@@ -39,7 +39,7 @@ def display_statistics(df, root_values):
     for column in df.drop(columns=root_values).columns:
         df_column_stats = df[column].value_counts().to_frame().reset_index()
         df_column_stats.columns = [column, 'Count']
-        if not df_column_stats.empty and not df_column_stats[column].str.contains('None').any():
+        if not df_column_stats.empty and not df_column_stats[column].astype(str).str.contains('None').any():
             st.write(f"Statistics for {column}")
             st.dataframe(df_column_stats)
 
