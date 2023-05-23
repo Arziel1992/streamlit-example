@@ -18,10 +18,10 @@ df1, df2, df3, df4 = load_data()
 def create_network_graph(df):
     G = nx.Graph()
     for i in range(len(df)):
-        root = df.iloc[i]['id']
+        root = df.iloc[i]['ID']
         G.add_node(root)
         for col in df.columns:
-            if col != 'id':
+            if col != 'ID':
                 G.add_node(df.iloc[i][col])
                 G.add_edge(root, df.iloc[i][col])
     return G
