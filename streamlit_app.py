@@ -1,36 +1,50 @@
-import streamlit as st
 import pandas as pd
+import streamlit as st
 import networkx as nx
-from pyvis.network import Network
+import matplotlib.pyplot as plt
 
 # Load data
-@st.cache_data  # Updated decorator
+@st.cache
 def load_data():
-    data = pd.read_csv('your_data.csv')
-    return data
+    df1 = pd.read_csv('women_on_remand.csv')
+    df2 = pd.read_csv('women_received_into_prison.csv')
+    df3 = pd.read_csv('women_on_supervised_orders_current.csv')
+    df4 = pd.read_csv('women_on_supervised_orders_starting.csv')
+    return df1, df2, df3, df4
 
-df = load_data()
+df1, df2, df3, df4 = load_data()
 
-# Initialize the network
-net = Network(height="750px", width="100%", bgcolor="#222222", font_color="white")
+# Create network graph
+def create_network_graph(df):
+    G = nx.Graph()
+    for i in range(len(df)):
+        root = df.iloc[i]['id']
+        G.add_node(root)
+        for col in df.columns:
+            if col != 'id':
+                G.add_node(df.iloc[i][col])
+                G.add_edge(root, df.iloc[i][col])
+    return G
 
-# add nodes for 'person'
-persons = df['RecordID'].unique()
-for person in persons:
-    net.add_node(person, label=person, color='green')
+# Draw network graph
+def draw_network_graph(G):
+    plt.figure(figsize=(8,6))
+    nx.draw(G, with_labels=True)
+    st.pyplot()
 
-# add nodes for other categories and connect them with 'person'
-categories = df.columns.to_list()
-categories.remove('RecordID')
+# Create and draw network graph for each dataframe
+st.header('Women on Remand')
+G1 = create_network_graph(df1)
+draw_network_graph(G1)
 
-for category in categories:
-    unique_values = df[category].unique()
-    for value in unique_values:
-        net.add_node(f'{category}_{value}', label=value, color='red')
-        subset = df[df[category] == value]
-        for i in subset['RecordID']:
-            net.add_edge(i, f'{category}_{value}')
-            
-# display the graph
-net.show('example.html')
-st.components.v1.html(net.HTML, height=600)
+st.header('Women Received into Prison')
+G2 = create_network_graph(df2)
+draw_network_graph(G2)
+
+st.header('Women on Supervised Orders (Current)')
+G3 = create_network_graph(df3)
+draw_network_graph(G3)
+
+st.header('Women on Supervised Orders (Starting)')
+G4 = create_network_graph(df4)
+draw_network_graph(G4)
