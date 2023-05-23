@@ -1,0 +1,5 @@
+ID,StartDate,OrderType,OrderLength(Days),BreachPercent,ReasonForBreach,ATSI,Nationality,Region
+1,2018-10-01,Community Work Order,365,10,Late Reporting,No,Australian,Melbourne
+2,2018-10-02,Parole,730,20,Drug Use,Yes,Australian,Geelong
+3,2018-10-03,Home Detention,180,0,None,No,Non-Australian,Melbourne
+4000,2020-02-28,Probation,365,15,Failed Drug Test,No,Australian,Ballarat
