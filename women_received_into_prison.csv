@@ -1,0 +1,5 @@
+ID,StartDate,MostSeriousCharge,ParentalStatus,PrimaryCarer,ATSI,Nationality
+1,2018-10-01,Theft,Yes,Yes,No,Australian
+2,2018-10-02,Assault,No,No,Yes,Australian
+3,2018-10-03,Drug Possession,Yes,No,No,Non-Australian
+2300,2020-02-28,Fraud,Yes,Yes,No,Australian
