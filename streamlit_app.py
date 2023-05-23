@@ -35,13 +35,13 @@ def draw_network_graph(G, root_values):
     st.pyplot(fig)
 
 # Display statistics
-def display_statistics(df, root):
-    for column in df.columns:
-        if column != root:
-            stats = df[column].value_counts()
-            if not stats.empty and not all(stats.index.isnull()):
-                st.subheader(f'Statistics for {column}')
-                st.dataframe(stats)
+def display_statistics(df, root_values):
+    for column in df.drop(columns=root_values).columns:
+        df_column_stats = df[column].value_counts().to_frame().reset_index()
+        df_column_stats.columns = [column, 'Count']
+        if not df_column_stats.empty and not df_column_stats[column].str.contains('None').any():
+            st.write(f"Statistics for {column}")
+            st.dataframe(df_column_stats)
 
 st.header('Victoria Corrections Data')
 st.write('Green = Case')
@@ -51,19 +51,19 @@ st.write('Red = Characteristics')
 st.header('Women on Remand')
 G1, root_values1 = create_network_graph(df1)
 draw_network_graph(G1, root_values1)
-display_statistics(df1, root1)
+display_statistics(df1, root_values1)
 
 st.header('Women Received into Prison')
 G2, root_values2 = create_network_graph(df2)
 draw_network_graph(G2, root_values2)
-display_statistics(df2, root2)
+display_statistics(df2, root_values2)
 
 st.header('Women on Supervised Orders (Current)')
 G3, root_values3 = create_network_graph(df3)
 draw_network_graph(G3, root_values3)
-display_statistics(df3, root3)
+display_statistics(df3, root_values3)
 
 st.header('Women on Supervised Orders (Starting)')
 G4, root_values4 = create_network_graph(df4)
 draw_network_graph(G4, root_values4)
-display_statistics(df4, root4)
+display_statistics(df4, root_values4)
