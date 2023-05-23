@@ -17,32 +17,24 @@ df1, df2, df3, df4 = load_data()
 # Create network graph
 def create_network_graph(df):
     G = nx.Graph()
-    root = df.columns[0] if 'id' not in df.columns else 'id' # Use the first column if 'id' does not exist
+    root_values = []
     for i in range(len(df)):
+        root = df.columns[0] if 'id' not in df.columns else 'id' # Use the first column if 'id' does not exist
         root_value = df.iloc[i][root]
+        root_values.append(root_value)
         G.add_node(root_value)
         for col in df.columns:
             if col != root:
                 G.add_node(df.iloc[i][col])
                 G.add_edge(root_value, df.iloc[i][col])
-    return G, root
+    return G, root_values
 
 # Draw network graph
-#def draw_network_graph(G, root_values):
-#    fig, ax = plt.subplots(figsize=(8,6))
-#    node_colors = ["green" if str(node) in map(str, root_values) else "red" for node in G.nodes()]
-#    nx.draw(G, with_labels=True, node_color=node_colors, ax=ax)
-#    st.pyplot(fig)
-    
 def draw_network_graph(G, root_values):
-    color_map = []
-    for node in G:
-        if node in root_values:
-            color_map.append('green')
-        else: 
-            color_map.append('red')  
-    nx.draw(G, with_labels=True, node_color=color_map)
-    st.pyplot()
+    fig, ax = plt.subplots(figsize=(8,6))
+    node_colors = ["green" if node in root_values else "red" for node in G.nodes()]
+    nx.draw(G, with_labels=True, node_color=node_colors, ax=ax)
+    st.pyplot(fig)
 
 # Display statistics
 def display_statistics(df, root_values):
