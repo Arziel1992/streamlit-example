@@ -37,13 +37,14 @@ def draw_network_graph(G, root_values):
     st.pyplot(fig)
 
 # Display statistics
-def display_statistics(df, root_values):
-    for column in df.drop(columns=root_values).columns:
-        df_column_stats = df[column].value_counts().to_frame().reset_index()
-        df_column_stats.columns = [column, 'Count']
-        if not df_column_stats.empty and not df_column_stats[column].astype(str).str.contains('None').any():
-            st.write(f"Statistics for {column}")
-            st.dataframe(df_column_stats)
+def display_statistics(df, root_column):
+    for column in df.columns:
+        if column != root_column:
+            df_column_stats = df[column].value_counts().to_frame().reset_index()
+            df_column_stats.columns = [column, 'Count']
+            if not df_column_stats.empty and not df_column_stats[column].astype(str).str.contains('None').any():
+                st.write(f"Statistics for {column}")
+                st.dataframe(df_column_stats)
 
 st.header('Victoria Corrections Data')
 st.write('Green = Case')
@@ -53,19 +54,23 @@ st.write('Red = Characteristics')
 st.header('Women on Remand')
 G1, root_values1 = create_network_graph(df1)
 draw_network_graph(G1, root_values1)
-display_statistics(df1, root_values1)
+root_column1 = df1.columns[0] if 'id' not in df1.columns else 'id'
+display_statistics(df1, root_column1)
 
 st.header('Women Received into Prison')
 G2, root_values2 = create_network_graph(df2)
 draw_network_graph(G2, root_values2)
-display_statistics(df2, root_values2)
+root_column2 = df2.columns[0] if 'id' not in df2.columns else 'id'
+display_statistics(df1, root_column2)
 
 st.header('Women on Supervised Orders (Current)')
 G3, root_values3 = create_network_graph(df3)
 draw_network_graph(G3, root_values3)
-display_statistics(df3, root_values3)
+root_column3 = df3.columns[0] if 'id' not in df3.columns else 'id'
+display_statistics(df3, root_column3)
 
 st.header('Women on Supervised Orders (Starting)')
 G4, root_values4 = create_network_graph(df4)
 draw_network_graph(G4, root_values4)
-display_statistics(df4, root_values4)
+root_column4 = df4.columns[0] if 'id' not in df4.columns else 'id'
+display_statistics(df4, root_column4)
