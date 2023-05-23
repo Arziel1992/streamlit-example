@@ -18,19 +18,20 @@ df1, df2, df3, df4 = load_data()
 def create_network_graph(df):
     G = nx.Graph()
     for i in range(len(df)):
-        root = df.iloc[i]['ID']
-        G.add_node(root)
+        root = df.columns[0] if 'id' not in df.columns else 'id' # Use the first column if 'id' does not exist
+        root_value = df.iloc[i][root]
+        G.add_node(root_value)
         for col in df.columns:
-            if col != 'ID':
+            if col != root:
                 G.add_node(df.iloc[i][col])
-                G.add_edge(root, df.iloc[i][col])
+                G.add_edge(root_value, df.iloc[i][col])
     return G
 
 # Draw network graph
 def draw_network_graph(G):
-    plt.figure(figsize=(8,6))
-    nx.draw(G, with_labels=True)
-    st.pyplot()
+    fig, ax = plt.subplots(figsize=(8,6))
+    nx.draw(G, with_labels=True, ax=ax)
+    st.pyplot(fig)
 
 # Create and draw network graph for each dataframe
 st.header('Women on Remand')
