@@ -34,23 +34,32 @@ def draw_network_graph(G, root):
     nx.draw(G, with_labels=True, node_color=node_colors, ax=ax)
     st.pyplot(fig)
 
+# Display statistics
+def display_statistics(df, root):
+    for column in df.columns:
+        if column != root:
+            stats = df[column].value_counts()
+            if not stats.empty and not all(stats.index.isnull()):
+                st.subheader(f'Statistics for {column}')
+                st.dataframe(stats)
+
 # Create and draw network graph for each dataframe
 st.header('Women on Remand')
 G1, root1 = create_network_graph(df1)
 draw_network_graph(G1, root1)
-st.dataframe(df1.drop(columns=root1).apply(pd.Series.value_counts))
+display_statistics(df1, root1)
 
 st.header('Women Received into Prison')
 G2, root2 = create_network_graph(df2)
 draw_network_graph(G2, root2)
-st.dataframe(df2.drop(columns=root2).apply(pd.Series.value_counts))
+display_statistics(df2, root2)
 
 st.header('Women on Supervised Orders (Current)')
 G3, root3 = create_network_graph(df3)
 draw_network_graph(G3, root3)
-st.dataframe(df3.drop(columns=root3).apply(pd.Series.value_counts))
+display_statistics(df3, root3)
 
 st.header('Women on Supervised Orders (Starting)')
 G4, root4 = create_network_graph(df4)
 draw_network_graph(G4, root4)
-st.dataframe(df4.drop(columns=root4).apply(pd.Series.value_counts))
+display_statistics(df4, root4)
