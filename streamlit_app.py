@@ -17,7 +17,8 @@ net = Network(height="750px", width="100%", bgcolor="#222222", font_color="white
 # add nodes for 'person'
 persons = df['RecordID'].unique()
 for person in persons:
-    net.add_node(person, label=str(person), color='green')
+    person_str = str(person)
+    net.add_node(person_str, label=person_str, color='green')
 
 # add nodes for other categories and connect them with 'person'
 categories = df.columns.to_list()
@@ -26,10 +27,11 @@ categories.remove('RecordID')
 for category in categories:
     unique_values = df[category].unique()
     for value in unique_values:
-        net.add_node(f'{category}_{value}', label=str(value), color='red')
+        value_str = str(value)
+        net.add_node(f'{category}_{value_str}', label=value_str, color='red')
         subset = df[df[category] == value]
         for i in subset['RecordID']:
-            net.add_edge(i, f'{category}_{value}')
+            net.add_edge(str(i), f'{category}_{value_str}')
             
 # display the graph
 net.show('example.html')
