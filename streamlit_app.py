@@ -30,7 +30,7 @@ def create_network_graph(df):
 # Draw network graph
 def draw_network_graph(G, root_values):
     fig, ax = plt.subplots(figsize=(8,6))
-    node_colors = ["green" if node in root_values else "red" for node in G.nodes()]
+    node_colors = ["green" if str(node) in map(str, root_values) else "red" for node in G.nodes()]
     nx.draw(G, with_labels=True, node_color=node_colors, ax=ax)
     st.pyplot(fig)
 
