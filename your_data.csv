@@ -1,0 +1,9 @@
+Period,RecordType,RecordID,MostSeriousCharge,LengthOfTimeInCustody,CircumstancesOfDischarge,ATSIStatus,Nationality,ParentalStatus,PrimaryCarer,TypeOfCommunityOrder,LengthOfOrder,BreachesOfOrder,ReasonForBreach,Region
+Pre-COVID,Remand,1,Assault,30,None,Non-Indigenous,Australian,Unknown,No,N/A,N/A,N/A,N/A,Melbourne
+Pre-COVID,Received,2,Drug Trafficking,120,Completed Sentence,Indigenous,Australian,Parent,Yes,N/A,N/A,N/A,N/A,Ballarat
+Pre-COVID,CommunityOrderCurrent,3,N/A,N/A,N/A,Non-Indigenous,Australian,N/A,N/A,Community Correction Order,24,0,N/A,Melbourne
+Pre-COVID,CommunityOrderStarted,4,N/A,N/A,N/A,Indigenous,Australian,N/A,N/A,Intensive Correction Order,18,2,Non-compliance,Bendigo
+During-COVID,Remand,5,Burglary,60,None,Non-Indigenous,Australian,Unknown,No,N/A,N/A,N/A,N/A,Melbourne
+During-COVID,Received,6,Assault,150,Parole,Non-Indigenous,New Zealander,Parent,No,N/A,N/A,N/A,N/A,Geelong
+During-COVID,CommunityOrderCurrent,7,N/A,N/A,N/A,Indigenous,Australian,N/A,N/A,Parole,36,1,Non-compliance,Melbourne
+During-COVID,CommunityOrderStarted,8,N/A,N/A,N/A,Non-Indigenous,New Zealander,N/A,N/A,Community Correction Order,24,0,N/A,Bendigo
